@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arial">
+    <title>Drone Synthesizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #282c34;
+            color: white;
+            text-align: center;
+        }
+
+        .oscillator {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #333;
+            display: inline-block;
+        }
+
+        input[type=range] {
+            width: 80%;
+        }
+
+        .note-buttons button,
+        .octave-controls button,
+        .start-stop-controls button {
+            margin: 5px;
+            padding: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .note-buttons button:hover,
+        .octave-controls button:hover,
+        .start-stop-controls button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Drone Synthesizer</h1>
+
+    <div class="oscillator" id="osc1">
+        <h3>Oscillator 1</h3>
+        <input type="range" id="pitch-slider-1" min="0" max="1" step="0.01">
+        <div class="note-buttons">
+            <button data-note="C">C</button>
+            <button data-note="C#">C#</button>
+            <button data-note="D">D</button>
+            <button data-note="D#">D#</button>
+            <button data-note="E">E</button>
+            <button data-note="F">F</button>
+            <button data-note="F#">F#</button>
+            <button data-note="G">G</button>
+            <button data-note="G#">G#</button>
+            <button data-note="A">A</button>
+            <button data-note="A#">A#</button>
+            <button data-note="B">B</button>
+        </div>
+        <div class="octave-controls">
+            <button id="octave-down-1">Octave Down</button>
+            <button id="octave-up-1">Octave Up</button>
+        </div>
+        <div class="start-stop-controls">
+            <button id="start-osc-1">Start</button>
+            <button id="stop-osc-1">Stop</button>
+        </div>
+    </div>
+
+    <!-- Repeat Oscillator div for each of the 4 oscillators -->
+    <div class="oscillator" id="osc2">
+        <h3>Oscillator 2</h3>
+        <input type="range" id="pitch-slider-2" min="0" max="1" step="0.01">
+        <div class="note-buttons">
+            <button data-note="C">C</button>
+            <button data-note="C#">C#</button>
+            <button data-note="D">D</button>
+            <button data-note="D#">D#</button>
+            <button data-note="E">E</button>
+            <button data-note="F">F</button>
+            <button data-note="F#">F#</button>
+            <button data-note="G">G</button>
+            <button data-note="G#">G#</button>
+            <button data-note="A">A</button>
+            <button data-note="A#">A#</button>
+            <button data-note="B">B</button>
+        </div>
+        <div class="octave-controls">
+            <button id="octave-down-2">Octave Down</button>
+            <button id="octave-up-2">Octave Up</button>
+        </div>
+        <div class="start-stop-controls">
+            <button id="start-osc-2">Start</button>
+            <button id="stop-osc-2">Stop</button>
+        </div>
+    </div>
+
+    <div class="oscillator" id="osc3">
+        <h3>Oscillator 3</h3>
+        <input type="range" id="pitch-slider-3" min="0" max="1" step="0.01">
+        <div class="note-buttons">
+            <button data-note="C">C</button>
+            <button data-note="C#">C#</button>
+            <button data-note="D">D</button>
+            <button data-note="D#">D#</button>
+            <button data-note="E">E</button>
+            <button data-note="F">F</button>
+            <button data-note="F#">F#</button>
+            <button data-note="G">G</button>
+            <button data-note="G#">G#</button>
+            <button data-note="A">A</button>
+            <button data-note="A#">A#</button>
+            <button data-note="B">B</button>
+        </div>
+        <div class="octave-controls">
+            <button id="octave-down-3">Octave Down</button>
+            <button id="octave-up-3">Octave Up</button>
+        </div>
+        <div class="start-stop-controls">
+            <button id="start-osc-3">Start</button>
+            <button id="stop-osc-3">Stop</button>
+        </div>
+    </div>
+
+    <div class="oscillator" id="osc4">
+        <h3>Oscillator 4</h3>
+        <input type="range" id="pitch-slider-4" min="0" max="1" step="0.01">
+        <div class="note-buttons">
+            <button data-note="C">C</button>
+            <button data-note="C#">C#</button>
+            <button data-note="D">D</button>
+            <button data-note="D#">D#</button>
+            <button data-note="E">E</button>
+            <button data-note="F">F</button>
+            <button data-note="F#">F#</button>
+            <button data-note="G">G</button>
+            <button data-note="G#">G#</button>
+            <button data-note="A">A</button>
+            <button data-note="A#">A#</button>
+            <button data-note="B">B</button>
+        </div>
+        <div class="octave-controls">
+            <button id="octave-down-4">Octave Down</button>
+            <button id="octave-up-4">Octave Up</button>
+        </div>
+        <div class="start-stop-controls">
+            <button id="start-osc-4">Start</button>
+            <button id="stop-osc-4">Stop</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillators = [];
+            const baseFrequencies = {
+                "C": 261.63,
+                "C#": 277.18,
+                "D": 293.66,
+                "D#": 311.13,
+                "E": 329.63,
+                "F": 349.23,
+                "F#": 369.99,
+                "G": 392.00,
+                "G#": 415.30,
+                "A": 440.00,
+                "A#": 466.16,
+                "B": 493.88
+            };
+            let octaves = [0, 0, 0, 0]; // Track octave for each oscillator
+
+            for (let i = 0; i < 4; i++) {
+                let osc = null;
+                let gainNode = audioContext.createGain();
+                gainNode.gain.value = 0.1; // Keep the gain low to avoid loud output
+                gainNode.connect(audioContext.destination);
+
+                // Start button functionality
+                document.getElementById(`start-osc-${i + 1}`).addEventListener('click', () => {
+                    if (!osc) {
+                        osc = audioContext.createOscillator();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(261.63 * Math.pow(2, octaves[i]), audioContext.currentTime); // Default to middle C with current octave
+                        osc.connect(gainNode);
+                        osc.start();
+                        oscillators[i] = osc;
+                    }
+                });
+
+                // Stop button functionality
+                document.getElementById(`stop-osc-${i + 1}`).addEventListener('click', () => {
+                    if (osc) {
+                        osc.stop();
+                        osc.disconnect();
+                        osc = null;
+                        oscillators[i] = null;
+                    }
+                });
+
+                // Pitch slider functionality
+                const slider = document.getElementById(`pitch-slider-${i + 1}`);
+                slider.addEventListener('input', (event) => {
+                    if (osc) {
+                        const sliderValue = parseFloat(event.target.value);
+                        osc.frequency.setValueAtTime(261.63 * (1 + sliderValue) * Math.pow(2, octaves[i]), audioContext.currentTime);
+                    }
+                });
+
+                // Note buttons functionality
+                const noteButtons = document.querySelectorAll(`#osc${i + 1} .note-buttons button`);
+                noteButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        if (osc) {
+                            const note = button.getAttribute('data-note');
+                            const frequency = baseFrequencies[note] * Math.pow(2, octaves[i]);
+                            osc.frequency.setValueAtTime(frequency, audioContext.currentTime);
+                        }
+                    });
+                });
+
+                // Octave controls functionality
+                document.getElementById(`octave-up-${i + 1}`).addEventListener('click', () => {
+                    octaves[i] = Math.min(octaves[i] + 1, 4); // Limit the octave range to avoid extreme pitches
+                    if (osc) {
+                        const currentFreq = osc.frequency.value;
+                        osc.frequency.setValueAtTime(currentFreq * 2, audioContext.currentTime);
+                    }
+                });
+
+                document.getElementById(`octave-down-${i + 1}`).addEventListener('click', () => {
+                    octaves[i] = Math.max(octaves[i] - 1, -4);
+                    if (osc) {
+                        const currentFreq = osc.frequency.value;
+                        osc.frequency.setValueAtTime(currentFreq / 2, audioContext.currentTime);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
